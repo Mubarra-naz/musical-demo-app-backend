@@ -9,7 +9,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if resource.persisted?
       render json: { message: "Signed up successfully", data: UserSerializer.new(resource).serializable_hash[:data]}, status: :ok
     else
-    byebug
       render json: { error: "#{resource.errors.full_messages.to_sentence}"}, status: :unprocessable_entity
     end
   end

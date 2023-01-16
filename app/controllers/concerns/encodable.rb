@@ -16,7 +16,12 @@ module Encodable
 
   def encode(payload: {id: id})
     payload[:exp] = Time.now.to_i + self.class.const_get('TTL')
-    JWT.encode(payload, SECRET_TOKEN, ALGORITHM)
+    token = JWT.encode(payload, SECRET_TOKEN, ALGORITHM)
+
+    {
+      token: token,
+      expiresIn: payload[:exp]
+    }
   end
 
   def token

@@ -9,14 +9,14 @@ class Users::SessionsController < Devise::SessionsController
 
   def respond_with(resource, _options = {})
     authToken = encode(payload: { user_id: resource.id})
-    render json: UserSerializer.new(resource, { params: {token: authToken}}).serialized_json, status: :ok
+    render json: authToken.to_json, status: :ok
   end
 
   def respond_to_on_destroy
     if current_user
       render json: { message: "Logged out successfully" }, status: :ok
     else
-      render json: { error: "couldn't find an active session" }, status: :unauthorized
+      render json: { message: "couldn't find an active session" }, status: :unauthorized
     end
   end
 end
