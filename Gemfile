@@ -27,6 +27,10 @@ gem 'rack-cors'
 gem 'devise'
 gem 'jwt'
 gem 'fast_jsonapi'
+gem "dotenv-rails"
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
