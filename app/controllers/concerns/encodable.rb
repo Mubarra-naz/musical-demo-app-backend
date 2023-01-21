@@ -7,11 +7,15 @@ module Encodable
   ALGORITHM = 'HS256'.freeze
   TTL = 2.weeks.to_i.freeze
 
-  def decode(token)
-    encoded = token.split(" ").last
-    JWT.decode(encoded, SECRET_TOKEN, true, { algorithm: ALGORITHM }).first
-  rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-    nil
+  def decode(token, isGoogleToken = false)
+    if isGoogleToken
+      JWT.decode(token, nil, false).first
+    else
+      encoded = token.split(" ").last
+      JWT.decode(encoded, SECRET_TOKEN, true, { algorithm: ALGORITHM }).first
+    end
+  rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError => e
+    render json: { error: e.message }, status: :unauthorized
   end
 
   def encode(payload: {id: id})
