@@ -5,7 +5,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :first_name, :last_name, presence: true
-  validate :password_strength
+  validate :password_strength, if: :password_required?
+
+  USER = 'user'.freeze
+  ARTIST = 'artist'.freeze
+  ROLES = {user: USER, artist: ARTIST}.freeze
+
+  enum role: ROLES, _default: USER
 
   def self.from_google_auth(token)
     where(email: token["email"]).first_or_create do |user|
@@ -24,5 +30,11 @@ class User < ApplicationRecord
     errors.add(:password, 'must contain at least one uppercase character.') unless /^(?=.*[A-Z])/.match(password)
     errors.add(:password, 'must contain at least one digit.') unless /^(?=.*[0-9])/.match(password)
     errors.add(:password, 'must be at least 8 characters long.') unless /^(?=.{8,})/.match(password)
+  end
+
+  def password_required?
+    return false if artist?
+
+    super
   end
 end
