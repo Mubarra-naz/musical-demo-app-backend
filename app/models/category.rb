@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   has_many :sub_categories, foreign_key: :category_id, class_name: 'Category', dependent: :destroy
+  has_many :tracks, through: :sub_categories, dependent: :nullify
 
   belongs_to :category, class_name: 'Category', optional: true
 

@@ -7,6 +7,9 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validate :password_strength, if: :password_required?
 
+  has_many :artist_tracks, inverse_of: :user, dependent: :destroy
+  has_many :tracks, through: :artist_tracks
+
   USER = 'user'.freeze
   ARTIST = 'artist'.freeze
   ROLES = {user: USER, artist: ARTIST}.freeze
