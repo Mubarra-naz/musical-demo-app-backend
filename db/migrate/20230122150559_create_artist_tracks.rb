@@ -1,10 +1,8 @@
 class CreateArtistTracks < ActiveRecord::Migration[6.1]
   def change
-    create_table :artist_tracks do |t|
-      t.belongs_to :user
-      t.belongs_to :track
-
-      t.timestamps
+  create_join_table :users, :tracks do |t|
+      t.index [:user_id, :track_id]
+      t.index [:track_id, :user_id]
     end
   end
 end

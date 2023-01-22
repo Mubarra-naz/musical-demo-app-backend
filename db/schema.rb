@@ -69,15 +69,6 @@ ActiveRecord::Schema.define(version: 2023_01_22_150559) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "artist_tracks", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "track_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["track_id"], name: "index_artist_tracks_on_track_id"
-    t.index ["user_id"], name: "index_artist_tracks_on_user_id"
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.bigint "category_id"
@@ -100,6 +91,13 @@ ActiveRecord::Schema.define(version: 2023_01_22_150559) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_tracks_on_category_id"
+  end
+
+  create_table "tracks_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "track_id", null: false
+    t.index ["track_id", "user_id"], name: "index_tracks_users_on_track_id_and_user_id"
+    t.index ["user_id", "track_id"], name: "index_tracks_users_on_user_id_and_track_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,5 +1,5 @@
 ActiveAdmin.register Track do
-  permit_params :audio, :name, :status, :price, :category_id, :remove_audio, artist_tracks_attributes: [:user_id, :track_id, :_destroy]
+  permit_params :id, :audio, :name, :status, :price, :category_id, artist_tracks_attributes: [:id, :user_id, :_destroy]
 
   form do |f|
     f.inputs "Details" do
@@ -8,7 +8,7 @@ ActiveAdmin.register Track do
       # div do
       # span link_to 'remove current audio', remove_audio_admin_track_path(f.object), data: { confirm: 'Do you want to remove this audio?' }, method: :delete, remote: true if f.object.audio.persisted?
       # end
-      f.input :price
+      f.input :price, label: "Price in $"
       f.input :status, as: :select, collection: Track::STATUSES, include_blank: false
       f.input :category_id, as: :select, collection: Category.sub_categories
     end

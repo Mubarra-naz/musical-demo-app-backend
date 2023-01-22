@@ -35,6 +35,7 @@ gem 'activeadmin'
 gem 'sprockets'
 gem 'sass-rails'
 gem 'aws-sdk-s3'
+gem 'streamio-ffmpeg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -42,5 +42,7 @@ module MusicalDemoBackend
     config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
     config.middleware.use Rack::MethodOverride
     config.middleware.use ActionDispatch::Flash
+
+    # config.ffmpeg.binary = '/usr/local/bin/ffmpeg'
   end
 end
