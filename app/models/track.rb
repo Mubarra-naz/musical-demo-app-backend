@@ -3,6 +3,7 @@ class Track < ApplicationRecord
 
   has_one_attached :audio, dependent: :destroy #mp3 file
   has_one_attached :wav_file, dependent: :destroy
+  has_one_attached :opus_file, dependent: :destroy
 
   has_many :artist_tracks, dependent: :delete_all
   has_many :artists, class_name: 'Users', through: :artist_tracks
@@ -31,11 +32,25 @@ class Track < ApplicationRecord
   def save_wav_file
     return if wav_file.attached? && audio.persisted?
 
-    output_path = convert_to_wav(audio, id)
-    wav_file.attach(io: File.open(output_path), filename: "#{audio.filename.to_s[0...-4]}.wav")
-    puts "saving wav for track: #{id}"
+    output_path = convert_with_ffmpeg(audio, id, "wav")
+    wav_file.attach(io: File.open(output_path), filename: "#{get_audio_filename}.wav")
+
     save!
     File.delete(output_path)
+  end
+
+  def save_opus_file
+    return if opus_file.attached? && audio.persisted?
+
+    output_path = convert_with_ffmpeg(audio, id, "opus")
+    opus_file.attach(io: File.open(output_path), filename: "#{get_audio_filename}.opus")
+
+    save!
+    File.delete(output_path)
+  end
+
+  def get_audio_filename
+    audio.filename.to_s[0...-4]
   end
 
   private
