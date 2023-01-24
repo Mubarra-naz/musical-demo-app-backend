@@ -18,19 +18,10 @@ class Track < ApplicationRecord
   STATUSES = {publish: PUBLISH, unpublish: UNPUBLISH}.freeze
 
   enum status: STATUSES, _default: PUBLISH
-  after_save_commit :save_to_opus
 
   # def purge_audio
   #   self.audio = nil
   # end
-
-  def save_to_opus
-    return if opus.attached? && audio.persisted?
-
-    output_path = convert_to_opus(audio)
-    opus.attach(io: File.open(output_path), filename: "#{audio.filename.to_s[0...-4]}.opus")
-    save!
-  end
 
   private
 
