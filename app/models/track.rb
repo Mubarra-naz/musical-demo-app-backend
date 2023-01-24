@@ -1,8 +1,5 @@
 class Track < ApplicationRecord
-  include FileConvertable
-
   has_one_attached :audio, dependent: :destroy #mp3 file
-  has_one_attached :opus, dependent: :destroy
 
   has_many :artist_tracks, dependent: :delete_all
   has_many :artists, class_name: 'Users', through: :artist_tracks
