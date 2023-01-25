@@ -100,6 +100,14 @@ ActiveRecord::Schema.define(version: 2023_01_22_150559) do
     t.index ["user_id", "track_id"], name: "index_tracks_users_on_user_id_and_track_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.bigint "category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_categories_on_category_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
