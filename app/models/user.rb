@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :artist_tracks, dependent: :delete_all
   has_many :tracks, through: :artist_tracks
+  has_many :favourites, dependent: :delete_all
+  has_many :favourite_tracks, through: :favourites, source: :track
 
   USER = 'user'.freeze
   ARTIST = 'artist'.freeze

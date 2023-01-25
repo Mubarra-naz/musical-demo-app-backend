@@ -7,6 +7,8 @@ class Track < ApplicationRecord
 
   has_many :artist_tracks, dependent: :delete_all
   has_many :artists, class_name: 'Users', through: :artist_tracks
+  has_many :favourites, dependent: :destroy
+  has_many :favourite_tracks, through: :favorites, source: :user
 
   validates :name, :price, presence: true
   validate :validate_audio_format

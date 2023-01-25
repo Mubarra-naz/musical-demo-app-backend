@@ -3,7 +3,8 @@ class Api::TracksController < ApiController
 
   def index
     @tracks = Track.published
-    render json: TrackSerializer.new(@tracks)
+    @favourite_tracks = current_user.favourite_tracks if logged_in?
+    render json: TrackSerializer.new(@tracks, params: { favourite_tracks: @favourite_tracks })
   end
 
   def download

@@ -14,7 +14,7 @@ class Users::SessionsController < Devise::SessionsController
       @user = User.from_google_auth(decoded_token)
       respond_with(@user)
 
-      render json: { error: "#{@user.errors.full_messages.to_sentence}"}, status: :unprocessable_entity if @user.errors.any?
+      render json: { error: "#{@user.errors.full_messages.to_sentence}" }, status: :unprocessable_entity if @user.errors.any?
     else
       super
     end
