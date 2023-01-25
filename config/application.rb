@@ -42,6 +42,7 @@ module MusicalDemoBackend
     config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
     config.middleware.use Rack::MethodOverride
     config.middleware.use ActionDispatch::Flash
+    config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 
     # config.ffmpeg.binary = '/usr/local/bin/ffmpeg'
   end
