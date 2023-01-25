@@ -59,6 +59,6 @@ class Track < ApplicationRecord
 
   def validate_audio_format
     errors.add(:audio, "must be attached") unless audio.attached?
-    errors.add(:audio, "must be an mp3 file") if audio.attached? && !audio.content_type.in?(['audio/mpeg', 'audio/mp3'])
+    errors.add(:audio, "must be an mp3 file") if audio.attached? && %w[audio/mpeg audio/mp3].exclude?(audio.content_type)
   end
 end

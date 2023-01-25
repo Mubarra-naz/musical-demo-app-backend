@@ -23,8 +23,8 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _options = {})
-    authToken = encode(payload: { user_id: resource.id})
-    render json: authToken.to_json, status: :ok
+    auth_token = encode(payload: { user_id: resource.id})
+    render json: auth_token.to_json, status: :ok
   end
 
   def respond_to_on_destroy
