@@ -28,6 +28,9 @@ gem 'devise'
 gem 'jwt'
 gem 'fast_jsonapi'
 gem "dotenv-rails"
+gem 'activeadmin'
+gem 'sprockets'
+gem 'sass-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
