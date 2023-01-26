@@ -21,6 +21,6 @@ class TrackSerializer < BaseSerializer
   end
 
   meta do |pagination|
-    { current_page: pagination[:current_page], total_pages: pagination[:total_pages] }
+    { current_page: pagination[:current_page], total_pages: pagination[:total_pages], total_records: pagination[:total_records] }
   end
 end

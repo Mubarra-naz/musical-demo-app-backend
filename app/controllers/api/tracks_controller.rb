@@ -7,7 +7,7 @@ class Api::TracksController < ApiController
     scope = paginate_scope(scope)
     scope = sort_scope(scope)
     @favourite_tracks = current_user.favourite_tracks if token.present?
-    render json: TrackSerializer.new(scope, params: { favourite_tracks: @favourite_tracks }, meta: { current_page: scope.current_page, total_pages: scope.total_pages })
+    render json: TrackSerializer.new(scope, params: { favourite_tracks: @favourite_tracks }, meta: { current_page: scope.current_page, total_pages: scope.total_pages, total_records: scope.total_count })
   end
 
   def download
