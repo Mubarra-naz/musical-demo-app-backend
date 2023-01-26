@@ -11,11 +11,16 @@ class TrackSerializer < BaseSerializer
       UserSerializer.new(artist_track.artist)
     end
   end
+
   attribute :is_favourite do |object, params|
     if params[:favourite_tracks]
       params[:favourite_tracks].include?(object)
     else
       false
     end
+  end
+
+  meta do |pagination|
+    { current_page: pagination[:current_page], total_pages: pagination[:total_pages] }
   end
 end

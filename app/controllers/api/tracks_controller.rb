@@ -1,10 +1,13 @@
 class Api::TracksController < ApiController
+  include WithAdditionalScopes
   before_action :logged_in?, :get_track, only: [:download]
 
   def index
-    @tracks = Track.published
+    scope = Track.published
+    scope = paginate_scope(scope)
+    scope = sort_scope(scope)
     @favourite_tracks = current_user.favourite_tracks if token.present?
-    render json: TrackSerializer.new(@tracks, params: { favourite_tracks: @favourite_tracks })
+    render json: TrackSerializer.new(scope, params: { favourite_tracks: @favourite_tracks }, meta: { current_page: scope.current_page, total_pages: scope.total_pages })
   end
 
   def download
